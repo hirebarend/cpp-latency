@@ -11,6 +11,11 @@ endif()
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm|armv7)")
+    message(STATUS "Targeting 32-bit ARM (Raspberry Pi 2/3/4): Cortex-A7 baseline")
+    add_compile_options(-march=armv7-a -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard)
+endif()
+
 add_executable(server src/server.cpp)
 add_executable(client src/client.cpp)
 

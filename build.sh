@@ -6,13 +6,11 @@ BUILD_DIR="${SCRIPT_DIR}/build"
 BUILD_TYPE="${BUILD_TYPE:-Release}"
 
 CXX="${CXX:-clang++}"
-CC="${CC:-clang}"
 
 mkdir -p "${BUILD_DIR}"
 
 cmake -S "${SCRIPT_DIR}" -B "${BUILD_DIR}" \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
-    -DCMAKE_C_COMPILER="${CC}" \
     -DCMAKE_CXX_COMPILER="${CXX}" \
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 

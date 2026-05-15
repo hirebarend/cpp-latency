@@ -34,6 +34,11 @@ chmod +x build.sh
 ./build.sh
 
 echo
+echo "Build info:"
+echo "  host arch : $(uname -m)"
+file ./build/client | sed 's/^/  binary    : /'
+echo
+
 echo "Running client against ${SERVER_HOST}:${SERVER_PORT}"
 echo "  iterations=${ITERATIONS} warmup=${WARMUP} interval-ms=${INTERVAL_MS}"
 echo
