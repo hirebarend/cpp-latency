@@ -36,6 +36,13 @@ chmod +x build.sh
 echo
 echo "Build info:"
 echo "  host arch : $(uname -m)"
+if [[ -r /proc/device-tree/model ]]; then
+    echo "  pi model  : $(tr -d '\0' < /proc/device-tree/model)"
+fi
+if grep -q '^model name' /proc/cpuinfo; then
+    echo "  cpu model : $(grep -m1 '^model name' /proc/cpuinfo | sed 's/.*: //')"
+fi
+echo "  cpu flags : $(grep -m1 '^Features' /proc/cpuinfo | sed 's/.*: //')"
 file ./build/client | sed 's/^/  binary    : /'
 echo
 

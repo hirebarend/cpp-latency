@@ -11,9 +11,14 @@ endif()
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm|armv7)")
-    message(STATUS "Targeting 32-bit ARM (Raspberry Pi 2/3/4): Cortex-A7 baseline")
-    add_compile_options(-march=armv7-a -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    if(CMAKE_SYSTEM_PROCESSOR STREQUAL "armv6l")
+        message(STATUS "Targeting ARMv6 hard-float (Raspberry Pi OS 32-bit baseline)")
+        add_compile_options(-march=armv6 -mfpu=vfp -mfloat-abi=hard)
+    elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "armv7l")
+        message(STATUS "Targeting ARMv7-A (Raspberry Pi OS 32-bit on ARMv7+ userspace)")
+        add_compile_options(-march=armv7-a -mtune=cortex-a7 -mfpu=neon-vfpv3 -mfloat-abi=hard)
+    endif()
 endif()
 
 add_executable(server src/server.cpp)
